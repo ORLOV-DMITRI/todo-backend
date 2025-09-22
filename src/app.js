@@ -19,7 +19,8 @@ app.use(express.json());
 app.use(cors({
     origin: [
         'http://localhost:3000',
-        'https://todo-frontend-tau-six.vercel.app'
+        'https://todo-frontend-tau-six.vercel.app',
+        'https://todo.dmitri-server.ru'
     ],
     credentials: true
 }));
