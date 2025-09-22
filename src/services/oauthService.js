@@ -3,6 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const GitHubStrategy = require('passport-github2').Strategy;
 const prisma = require('../utils/database');
 const authService = require('./authService');
+const folderService = require('./folderService');
 
 class OAuthService {
     constructor() {
@@ -82,6 +83,12 @@ class OAuthService {
                 }
             });
 
+            try {
+                await folderService.createDefaultFolder(user.id);
+            } catch (error) {
+                console.error('Warning: Failed to create default folder:', error.message);
+            }
+
             return done(null, user);
 
         } catch (error) {
@@ -125,6 +132,12 @@ class OAuthService {
                     githubId
                 }
             });
+
+            try {
+                await folderService.createDefaultFolder(user.id);
+            } catch (error) {
+                console.error('Warning: Failed to create default folder:', error.message);
+            }
 
             return done(null, user);
 
