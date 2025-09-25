@@ -15,7 +15,7 @@ class OAuthService {
             passport.use(new GoogleStrategy({
                 clientID: process.env.GOOGLE_CLIENT_ID,
                 clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-                callbackURL: "/api/auth/google/callback"
+                callbackURL: `${process.env.BASE_URL}/api/auth/google/callback`
             }, this.handleGoogleCallback.bind(this)));
         }
 
@@ -23,7 +23,7 @@ class OAuthService {
             passport.use(new GitHubStrategy({
                 clientID: process.env.GITHUB_CLIENT_ID,
                 clientSecret: process.env.GITHUB_CLIENT_SECRET,
-                callbackURL: "/api/auth/github/callback"
+                callbackURL: `${process.env.BASE_URL}/api/auth/github/callback`
             }, this.handleGitHubCallback.bind(this)));
         }
 
