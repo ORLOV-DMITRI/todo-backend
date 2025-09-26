@@ -1,5 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 
 generator client {
   provider = "prisma-client-js"
@@ -13,18 +12,15 @@ datasource db {
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
-  password  String?  // null для OAuth пользователей
+  password  String?
   name      String
 
-  // OAuth fields
   googleId  String?  @unique
   githubId  String?  @unique
 
-  // Timestamps
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relations (будут добавлены в следующих модулях)
   folders   Folder[]
   notes     Note[]
   tasks     Task[]
@@ -32,43 +28,37 @@ model User {
   @@map("users")
 }
 
-// Папки для заметок
 model Folder {
   id     String @id @default(cuid())
   name   String
   userId String
 
-  // Relations
   user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   notes Note[]
 
-  // Timestamps
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("folders")
 }
 
-// Заметки
 model Note {
   id       String  @id @default(cuid())
-  title    String? // Опционально, если нет - генерируется из текста
-  content  String  // Основной текст заметки
+  title    String?
+  content  String
   userId   String
   folderId String
 
-  // Relations
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   folder Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
 
-  // Timestamps
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("notes")
 }
 
-// Задачи (без папок)
 model Task {
   id          String  @id @default(cuid())
   title       String
@@ -76,10 +66,8 @@ model Task {
   completed   Boolean @default(false)
   userId      String
 
-  // Relations
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  // Timestamps
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

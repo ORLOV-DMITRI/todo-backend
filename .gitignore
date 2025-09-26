@@ -6,3 +6,5 @@ node_modules
 
 
 /backend/prisma/
+
+prisma/dev.db
